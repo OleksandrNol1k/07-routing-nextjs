@@ -10,15 +10,12 @@ export interface NewNote {
   tag: NoteTag;
 }
 
-export const fetchNotes = async (page: number, query: string): Promise<FetchNoteList> => {
+export const fetchNotes = async (page: number, search: string, tag?: string): Promise<FetchNoteList> => {
     
-  const params: Record<string, string | number> = {
-    perPage: 12,
-    page,
-  };
+  const params = {perPage: 12, page, tag, search};
 
-  if (query.trim() !== "") {
-    params.search = query;
+  if (search.trim() !== "") {
+    params.search = search;
   }
 
   const response = await axios.get<FetchNoteList>("/notes", {
